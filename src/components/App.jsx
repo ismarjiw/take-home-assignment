@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { searchArtworks } from '../api';
 import { SearchForm } from './SearchForm';
 import { Footer } from './Footer';
@@ -9,6 +8,7 @@ import './App.css';
 
 export function App() {
 	const [results, setResults] = useState([]);
+	const [selectedArtwork, setSelectedArtwork] = useState(null);
 
 	// Search for the users's query.
 	// TODO: render the results, instead of logging them to the console.
@@ -26,34 +26,38 @@ export function App() {
 		}
 	}
 
+	const handleArtworkSelect = (artwork) => {
+		setSelectedArtwork(artwork);
+	};
+
+	const handleBack = () => {
+		setSelectedArtwork(null);
+	};
+
 	return (
-		<Router>
-			<div className="App">
-				<h1>TCL Career Lab Art Finder</h1>
-				<SearchForm onSearchSubmit={onSearchSubmit} />
-				<Routes>
-					<Route
-						element={
-							<ul>
-								{results.map((result) => (
-									<li key={result.image_id}>
-										<Link to={`/artwork/${result.image_id}`}>
-											{result.title}
-										</Link>
-										<p>{result.artist_title || 'Unknown Artist'}</p>
-									</li>
-								))}
-							</ul>
-						}
-						path="/"
-					/>
-					<Route
-						element={<ImageDetails results={results} />}
-						path="/artwork/:imageId"
-					/>
-				</Routes>
-				<Footer />
-			</div>
-		</Router>
+		<div className="App">
+			<h1>TCL Career Lab Art Finder</h1>
+			{selectedArtwork ? (
+				<>
+					<ImageDetails artwork={selectedArtwork} />
+					<button onClick={handleBack}>Back</button>
+				</>
+			) : (
+				<>
+					<SearchForm onSearchSubmit={onSearchSubmit} />
+					<ul>
+						{results.map((result) => (
+							<li key={result.image_id}>
+								<button onClick={() => handleArtworkSelect(result)}>
+									{result.title}
+								</button>
+								<p>{result.artist_title || 'Unknown Artist'}</p>
+							</li>
+						))}
+					</ul>
+				</>
+			)}
+			<Footer />
+		</div>
 	);
 }
