@@ -1,8 +1,9 @@
 import { useState } from 'react';
-
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { searchArtworks } from '../api';
 import { SearchForm } from './SearchForm';
 import { Footer } from './Footer';
+import { ImageDetails } from './ImageDetailsPage';
 
 import './App.css';
 
@@ -26,23 +27,33 @@ export function App() {
 	}
 
 	return (
-		<div className="App">
-			<h1>TCL Career Lab Art Finder</h1>
-			<SearchForm onSearchSubmit={onSearchSubmit} />
-			<ul>
-				{results.map((result) => (
-					<li key={result.image_id}>
-						<img
-							alt={result.thumbnail.alt_text}
-							src={`https://www.artic.edu/iiif/2/${result.image_id}/full/843,/0/default.jpg`}
-						/>
-						<h2>{result.title}</h2>
-						<p>{result.date_display}</p>
-						<p>{result.artist_title || 'Unknown Artist'}</p>
-					</li>
-				))}
-			</ul>
-			<Footer />
-		</div>
+		<Router>
+			<div className="App">
+				<h1>TCL Career Lab Art Finder</h1>
+				<SearchForm onSearchSubmit={onSearchSubmit} />
+				<Routes>
+					<Route
+						element={
+							<ul>
+								{results.map((result) => (
+									<li key={result.image_id}>
+										<Link to={`/artwork/${result.image_id}`}>
+											{result.title}
+										</Link>
+										<p>{result.artist_title || 'Unknown Artist'}</p>
+									</li>
+								))}
+							</ul>
+						}
+						path="/"
+					/>
+					<Route
+						element={<ImageDetails results={results} />}
+						path="/artwork/:imageId"
+					/>
+				</Routes>
+				<Footer />
+			</div>
+		</Router>
 	);
 }
