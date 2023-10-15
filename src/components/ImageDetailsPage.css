@@ -1,0 +1,24 @@
+.image-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.image-titles {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.image-titles > h4 {
+	font-weight: normal;
+	margin-left: 10px;
+	padding-top: 5px;
+}
+
+.back-button {
+	border-radius: 4px;
+	padding: 0.5em;
+	border-color: black;
+	background-color: white;
+}

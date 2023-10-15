@@ -30,28 +30,33 @@ export function App() {
 		setSelectedArtwork(artwork);
 	};
 
-	const handleBack = () => {
-		setSelectedArtwork(null);
-	};
-
 	return (
 		<div className="App">
-			<h1>TCL Career Lab Art Finder</h1>
 			{selectedArtwork ? (
 				<>
-					<ImageDetails artwork={selectedArtwork} />
-					<button onClick={handleBack}>Back</button>
+					<ImageDetails
+						selectedArtwork={selectedArtwork}
+						setSelectedArtwork={setSelectedArtwork}
+					/>
 				</>
 			) : (
 				<>
+					<h1>TCL Career Lab Art Finder</h1>
 					<SearchForm onSearchSubmit={onSearchSubmit} />
 					<ul>
 						{results.map((result) => (
-							<li key={result.image_id}>
-								<button onClick={() => handleArtworkSelect(result)}>
+							<li key={result.image_id} className="art-link">
+								<a
+									href="/"
+									onClick={(e) => {
+										e.preventDefault();
+										handleArtworkSelect(result);
+									}}
+								>
 									{result.title}
-								</button>
-								<p>{result.artist_title || 'Unknown Artist'}</p>
+									{' by '}
+									{result.artist_title || 'Unknown Artist'}
+								</a>
 							</li>
 						))}
 					</ul>

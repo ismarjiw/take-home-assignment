@@ -10,3 +10,11 @@
 .App > h1 {
 	text-align: center;
 }
+
+.art-link {
+	padding-bottom: 10px;
+}
+
+a {
+	color: black;
+}

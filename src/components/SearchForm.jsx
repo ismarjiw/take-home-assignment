@@ -11,7 +11,9 @@ export function SearchForm({ onSearchSubmit }) {
 
 	function handleFormSubmit(e) {
 		e.preventDefault();
-		onSearchSubmit(query);
+		if (query) {
+			onSearchSubmit(query);
+		}
 	}
 
 	return (

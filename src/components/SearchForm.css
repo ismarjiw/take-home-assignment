@@ -14,13 +14,16 @@
 .Form .button,
 .Form .input {
 	padding: 0.5em;
+	border-radius: 4px;
 }
 
 .Form .button {
 	margin-top: 0.25em;
+	background-color: #000;
+	color: white;
 }
 
 .Form .input {
 	border: 1px solid var(--color-border);
-	border-radius: 0;
+	text-align: center;
 }
